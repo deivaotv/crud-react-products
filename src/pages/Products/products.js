@@ -1,5 +1,8 @@
 import React from 'react'
 import api from '../../services/api'
+import { withRouter } from 'react-router-dom'
+
+
 
 class Products extends React.Component {
     state = {
@@ -14,7 +17,7 @@ class Products extends React.Component {
                 console.log(this.state.products)              
             })
     }
-    destroy(id) {
+    handleDestroy(id) {
         api.delete(`products/${id}`)
         this.props.history.push("/products")
     }
@@ -26,13 +29,15 @@ class Products extends React.Component {
                 { this.state.products.map((products) => (
                         <ul key={products.id}>
                             <li>
-                                <a  href={`http://localhost:3000/product/${products.id}`}>
+                                <a  href={`http://localhost:3001/product/${products.id}`}>
                                 {products.name}
                                 </a>
                             </li>
                             <li>{products.description}</li>
                             <li>{products.price}</li>
-                            
+                            <button type="submit" onClick= { () => this.handleDestroy(products.id) }>
+                                excluir
+                            </button>
                         </ul>
                 ))}
                 <a href="http://localhost:3000/products-store">Register new</a>
@@ -42,4 +47,4 @@ class Products extends React.Component {
 
 }
 
-export default Products
+export default withRouter(Products)
